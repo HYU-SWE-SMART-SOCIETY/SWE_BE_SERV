@@ -1,9 +1,9 @@
 package com.holme.be_app.api.sync.factory
 
 import com.holme.be_app.api.sync.entity.*
-import com.holme.be_app.entity.*
+import org.springframework.stereotype.Component
 
-class Instances {
+private class FactoryInstances {
     val instanceMap = mapOf<Number, Instance>(
             1 to LightBulb(),
             2 to Curtain(),
@@ -16,10 +16,12 @@ class Instances {
             9 to AISpeaker()
     )
 }
+
+@Component
 class SyncInstanceTypeFactory {
 
-    private val instances: Instances = Instances()
+    private val factoryInstances: FactoryInstances = FactoryInstances()
     fun generateInstanceClass(type:Number): Instance {
-        return instances.instanceMap[type]!!
+        return factoryInstances.instanceMap[type]!!
     }
 }
