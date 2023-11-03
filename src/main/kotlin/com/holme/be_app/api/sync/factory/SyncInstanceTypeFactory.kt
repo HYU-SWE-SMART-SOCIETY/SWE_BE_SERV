@@ -1,9 +1,10 @@
 package com.holme.be_app.api.sync.factory
 
+import com.holme.be_app.api.sync.entity.*
 import com.holme.be_app.entity.*
 
 class Instances {
-    val instanceMap = mapOf<Number,Instance>(
+    val instanceMap = mapOf<Number, Instance>(
             1 to LightBulb(),
             2 to Curtain(),
             3 to AC(),
