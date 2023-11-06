@@ -5,3 +5,7 @@ spring:
   devtools:
     restart:
       enabled: true
+  profiles:
+    group:
+      dev:
+      prod:

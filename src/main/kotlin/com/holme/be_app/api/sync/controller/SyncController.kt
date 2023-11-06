@@ -1,10 +1,7 @@
 package com.holme.be_app.api.sync.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.holme.be_app.api.sync.entity.Instance
-import com.holme.be_app.api.sync.entity.SingleSyncRequest
-import com.holme.be_app.api.sync.entity.SyncRequest
-import com.holme.be_app.api.sync.entity.SyncResponse
+import com.holme.be_app.api.sync.entity.*
 import com.holme.be_app.api.sync.factory.SyncInstanceTypeFactory
 import com.holme.be_app.api.sync.service.SyncRequestService
 import com.holme.be_app.entity.response.SingleResponse
@@ -24,8 +21,12 @@ class SyncController(
 ) {
     @PostMapping("/request")
     fun handleSyncRequest(@RequestBody syncRequest: SyncRequest<in Instance>): SingleResponse<SyncResponse> {
+        val requestQueue: MutableList<SendSyncRequest> = mutableListOf<SendSyncRequest>()
+        requestQueue.clear()
         try{
+            val user = syncRequest.user
             val requestPayloads = syncRequest.payloads
+
             for (request: SingleSyncRequest<in Instance> in requestPayloads) {
                 //* Handle & Send every request received
                 val type = request.instanceType
@@ -34,9 +35,12 @@ class SyncController(
                     ?: //* Return Value is null == Something is wrong
                     throw Error("Error while serializing the data")
 
-                syncRequestService.sendSyncRequest(type, instance)
+                requestQueue.add(SendSyncRequest(
+                    type,
+                    ObjectMapper().writeValueAsString(instance)
+                ))
             }
-            // TODO: Add Response Type
+            syncRequestService.sendSyncRequest(user,requestQueue)
         }catch (e: Error) {
             val message: String = if(e.message is String) e.message!! else e.toString()
             return responseService.isFailure(-1, message)
