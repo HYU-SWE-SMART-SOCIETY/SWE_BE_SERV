@@ -40,7 +40,9 @@ class SyncController(
                     ObjectMapper().writeValueAsString(instance)
                 ))
             }
-            syncRequestService.sendSyncRequest(user,requestQueue)
+            val resp: SyncResponse = syncRequestService.sendSyncRequest(user,requestQueue)
+
+            if(!resp.ok) throw Error("Error from HIVEMIND: ${resp.message}") //* Error from HIVEMIND
         }catch (e: Error) {
             val message: String = if(e.message is String) e.message!! else e.toString()
             return responseService.isFailure(-1, message)
