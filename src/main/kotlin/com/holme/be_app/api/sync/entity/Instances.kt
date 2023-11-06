@@ -1,57 +1,61 @@
 package com.holme.be_app.api.sync.entity
 
+import kotlinx.serialization.Serializable
+
 interface Instance {}
 
 //* Instance 1: Light bulb
-class LightBulb(
-        trigger: Boolean = false,
-        degree: Number = 0,
-        color: String = ""
+@Serializable
+data class LightBulb(
+        var trigger: Boolean = false,
+        var degree: Int = 0,
+        var color: String = ""
 ): Instance
 
 //* Instance 2: Curtain
-class Curtain(
-        isHorizontal: Boolean = false,
-        isVertical: Boolean = false,
-        isLeftOrTop: Boolean = false,
-        degree: Number = 0
+@Serializable
+data class Curtain(
+        var isHorizontal: Boolean = false,
+        var isVertical: Boolean = false,
+        var isLeftOrTop: Boolean = false,
+        var degree: Int = 0
 ): Instance
 
 //* Instance 3: AC
 class AC(
-        trigger: Boolean = false,
-        temperature: Number = 0,
-        windDegree: Number = 0
+        var trigger: Boolean,
+        var temperature: Number,
+        var windDegree: Number
 ): Instance
 
 //* Instance 4: Refrigerator
 class Refrigerator(
-        trigger: Boolean = false
+        var trigger: Boolean
 ): Instance
 
 //* Instance 5: Water Dispenser
 class WaterDispenser(
-        triggerReminder: Boolean = false,
-        triggerWater: Boolean = false
+        var triggerReminder: Boolean,
+        var triggerWater: Boolean
 ): Instance
 
 //* Instance 6: TV
 class Television(
-        trigger: Boolean = false
+        var trigger: Boolean
 ): Instance
 
 //* Instance 7: Soundbar
 class SoundBar(
-        trigger: Boolean = false
+        var trigger: Boolean
 ): Instance
 
 //* Instance 8: Massage Chair
 class MassageChair(
-        trigger: Boolean = false
+        var trigger: Boolean
 ): Instance
 
 //* Instance 9: AI Speaker
 class AISpeaker(
-        trigger: Boolean = false,
-        replacementMsg: Boolean = false
+        var trigger: Boolean,
+        var replacementMsg: Boolean
 ): Instance

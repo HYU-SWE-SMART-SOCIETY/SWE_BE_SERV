@@ -4,8 +4,14 @@ import org.springframework.stereotype.Service
 
 @Service
 class SingleResponseService <T> {
-    fun isSuccessful(): SingleResponse<T> {
-        return SingleResponse<T>(true,1, "Request Successful")
+    fun isSuccessful(
+        message: String?
+    ): SingleResponse<T> {
+        return if(message == null){
+            SingleResponse<T>(true,1, "Request Successful")
+        }else {
+            SingleResponse<T>(true,1, message)
+        }
     }
 
     fun isFailure(

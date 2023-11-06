@@ -17,18 +17,22 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/sync")
 class SyncController(
-    @Autowired private val syncRequestService: SyncRequestService<Instance>,
+    @Autowired private val syncRequestService: SyncRequestService<in Instance>,
     @Autowired private val syncInstanceTypeFactory: SyncInstanceTypeFactory,
     @Autowired private val responseService: SingleResponseService<SyncResponse>
 ) {
     @PostMapping("/request")
-    fun handleSyncRequest(@RequestBody syncRequest: SyncRequest<Instance>): SingleResponse<SyncResponse> {
+    fun handleSyncRequest(@RequestBody syncRequest: SyncRequest<in Instance>): SingleResponse<SyncResponse> {
         try{
             val requestPayloads = syncRequest.payloads
-            for (request: SingleSyncRequest<Instance> in requestPayloads) {
+            for (request: SingleSyncRequest<in Instance> in requestPayloads) {
                 //* Handle & Send every request received
                 val type = request.instanceType
-                val instance = syncInstanceTypeFactory.generateInstanceClass(type)
+                val data = (request.payload).toString()
+                val instance = syncInstanceTypeFactory.generateInstanceClass(type,data)
+                    ?: //* Return Value is null == Something is wrong
+                    throw Error("Error while serializing the data")
+
                 syncRequestService.sendSyncRequest(type, instance)
             }
             // TODO: Add Response Type
@@ -36,6 +40,6 @@ class SyncController(
             val message: String = if(e.message is String) e.message!! else e.toString()
             return responseService.isFailure(-1, message)
         }
-        return responseService.isSuccessful()
+        return responseService.isSuccessful(null)
     }
 }

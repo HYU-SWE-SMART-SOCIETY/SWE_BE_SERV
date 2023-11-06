@@ -7,9 +7,9 @@ class SyncRequestService <T> {
 
     fun sendSyncRequest(
         instanceType: Int,
-        payload: T
+        payload: T,
     ) {
         //* TODO: Handle Data
-        println(payload)
+        println(payload.toString())
     }
 }
