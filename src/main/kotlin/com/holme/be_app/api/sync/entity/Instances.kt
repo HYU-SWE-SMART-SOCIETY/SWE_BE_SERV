@@ -10,52 +10,65 @@ data class LightBulb(
         var trigger: Boolean = false,
         var degree: Int = 0,
         var color: String = ""
-): Instance
+): Instance {
+        constructor(data: LightBulb) : this() {
+                this.trigger = data.trigger
+                this.degree = data.degree
+                this.color = data.color
+        }
+}
 
 //* Instance 2: Curtain
 @Serializable
 data class Curtain(
         var isHorizontal: Boolean = false,
-        var isVertical: Boolean = false,
+        var isCenterMode: Boolean = false,
         var isLeftOrTop: Boolean = false,
         var degree: Int = 0
 ): Instance
 
 //* Instance 3: AC
-class AC(
+@Serializable
+data class AC(
         var trigger: Boolean,
-        var temperature: Number,
-        var windDegree: Number
+        var temperature: Int,
+        var windDegree: Int
 ): Instance
 
 //* Instance 4: Refrigerator
-class Refrigerator(
+@Serializable
+data class Refrigerator(
         var trigger: Boolean
 ): Instance
 
 //* Instance 5: Water Dispenser
-class WaterDispenser(
+@Serializable
+data class WaterDispenser(
         var triggerReminder: Boolean,
         var triggerWater: Boolean
 ): Instance
 
 //* Instance 6: TV
-class Television(
+@Serializable
+data class Television(
         var trigger: Boolean
 ): Instance
 
 //* Instance 7: Soundbar
-class SoundBar(
+@Serializable
+data class SoundBar(
         var trigger: Boolean
 ): Instance
 
 //* Instance 8: Massage Chair
-class MassageChair(
+@Serializable
+data class MassageChair(
         var trigger: Boolean
 ): Instance
 
 //* Instance 9: AI Speaker
-class AISpeaker(
+@Serializable
+data class AISpeaker(
         var trigger: Boolean,
         var replacementMsg: Boolean
 ): Instance

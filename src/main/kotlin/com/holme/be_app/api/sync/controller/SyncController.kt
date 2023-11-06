@@ -1,5 +1,6 @@
 package com.holme.be_app.api.sync.controller
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.holme.be_app.api.sync.entity.Instance
 import com.holme.be_app.api.sync.entity.SingleSyncRequest
 import com.holme.be_app.api.sync.entity.SyncRequest
@@ -28,7 +29,7 @@ class SyncController(
             for (request: SingleSyncRequest<in Instance> in requestPayloads) {
                 //* Handle & Send every request received
                 val type = request.instanceType
-                val data = (request.payload).toString()
+                val data = request.payload!!
                 val instance = syncInstanceTypeFactory.generateInstanceClass(type,data)
                     ?: //* Return Value is null == Something is wrong
                     throw Error("Error while serializing the data")

@@ -1,7 +1,9 @@
 package com.holme.be_app.api.sync.factory
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.holme.be_app.api.sync.entity.*
 import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.springframework.stereotype.Component
 
@@ -19,31 +21,38 @@ private class FactoryInstances {
     )
     inline fun <reified T : Instance> decodeInstance(data: String): T? { //Decode the data into dedicated string
         return try {
-            Json.decodeFromString(data)
+            val instance: T = Json.decodeFromString(data)
+            instance
         } catch (e: Exception) {
+            println(e.message)
             null
         }
     }
-    private fun fillInstance(instance: Instance, data: String){
-        when(instance) {
-            is LightBulb -> decodeInstance<LightBulb>(data)
-            is Curtain -> decodeInstance<Curtain>(data)
-            is AC -> decodeInstance<AC>(data)
-            is Refrigerator -> decodeInstance<Refrigerator>(data)
-            is WaterDispenser -> decodeInstance<WaterDispenser>(data)
-            is Television -> decodeInstance<Television>(data)
-            is SoundBar -> decodeInstance<SoundBar>(data)
-            is MassageChair -> decodeInstance<MassageChair>(data)
-            is AISpeaker -> decodeInstance<AISpeaker>(data)
+
+    private fun fillInstance(instance: Instance, data: Any): Instance? {
+        val jsonStr: String = ObjectMapper().writeValueAsString(data)
+
+        return when(instance) {
+            is LightBulb -> decodeInstance<LightBulb>(jsonStr)
+            is Curtain -> decodeInstance<Curtain>(jsonStr)
+            is AC -> decodeInstance<AC>(jsonStr)
+            is Refrigerator -> decodeInstance<Refrigerator>(jsonStr)
+            is WaterDispenser -> decodeInstance<WaterDispenser>(jsonStr)
+            is Television -> decodeInstance<Television>(jsonStr)
+            is SoundBar -> decodeInstance<SoundBar>(jsonStr)
+            is MassageChair -> decodeInstance<MassageChair>(jsonStr)
+            is AISpeaker -> decodeInstance<AISpeaker>(jsonStr)
+            else -> return null
         }
     }
 
-    inline fun  <reified T: Instance>createInstance(type: Number, data: String): T?{
+    inline fun  <reified T: Instance>createInstance(type: Number, data: Any): T?{
         val instClass = instanceMap[type]!!
         return try{
             val constructor = instClass.getConstructor()
-            val instance = constructor.newInstance()
-            fillInstance(instance,data)
+            var instance = constructor.newInstance()
+            instance = fillInstance(instance,data) ?: throw Error("Error while creating instance")
+
             instance as T
         }catch (e: Error){
             println(e.message)
@@ -56,7 +65,7 @@ private class FactoryInstances {
 class SyncInstanceTypeFactory {
 
     private val factoryInstances: FactoryInstances = FactoryInstances()
-    fun generateInstanceClass(type:Number, data: String): Instance? {
+    fun generateInstanceClass(type:Number, data: Any): Instance? {
         return factoryInstances.createInstance(type, data)
     }
 }
