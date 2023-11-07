@@ -1,4 +1,4 @@
-package com.holme.be_app.entity.request
+package com.holme.be_app.api.entity.request
 
 open class SingleRequest<T>(
     override val payload: T

@@ -1,7 +1,7 @@
 package com.holme.be_app.api.sync.entity
 
-import com.holme.be_app.entity.request.MultipleRequests
-import com.holme.be_app.entity.request.SingleRequest
+import com.holme.be_app.api.entity.request.MultipleRequests
+import com.holme.be_app.api.entity.request.SingleRequest
 
 class SyncRequest<T: Instance> (
     val user: String,

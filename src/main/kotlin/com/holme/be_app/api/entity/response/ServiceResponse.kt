@@ -1,4 +1,4 @@
-package com.holme.be_app.entity.response
+package com.holme.be_app.api.entity.response
 
 interface ServiceResponse {
     val ok: Boolean

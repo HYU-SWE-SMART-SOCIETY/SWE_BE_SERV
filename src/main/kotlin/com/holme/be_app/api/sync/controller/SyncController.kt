@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.holme.be_app.api.sync.entity.*
 import com.holme.be_app.api.sync.factory.SyncInstanceTypeFactory
 import com.holme.be_app.api.sync.service.SyncRequestService
-import com.holme.be_app.entity.response.SingleResponse
-import com.holme.be_app.entity.response.SingleResponseService
+import com.holme.be_app.api.entity.response.SingleResponse
+import com.holme.be_app.api.entity.response.SingleResponseService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
