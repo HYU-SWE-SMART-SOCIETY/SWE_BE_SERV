@@ -7,5 +7,23 @@ spring:
       enabled: true
   profiles:
     group:
-      dev:
+      dev: dev
       prod:
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/HOLME_Dev?schema=public"
+    username: kyumericano
+    password: PASSWORD
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    show-sql: true
