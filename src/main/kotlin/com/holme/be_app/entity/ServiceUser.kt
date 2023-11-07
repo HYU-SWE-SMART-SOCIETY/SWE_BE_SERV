@@ -5,7 +5,7 @@ import jakarta.persistence.*
 @Entity
 class ServiceUser (
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int,
+    val id: Int?,
 
     @Column(nullable = false)
     val name: String,
