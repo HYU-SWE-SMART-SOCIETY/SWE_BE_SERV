@@ -45,8 +45,8 @@ class SyncController(
             if(!resp.ok) throw Error("Error from HIVEMIND: ${resp.message}") //* Error from HIVEMIND
         }catch (e: Error) {
             val message: String = if(e.message is String) e.message!! else e.toString()
-            return responseService.isFailure(-1, message)
+            return responseService.isFailure(-1, message, null)
         }
-        return responseService.isSuccessful(null)
+        return responseService.isSuccessful(null, null)
     }
 }
