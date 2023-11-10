@@ -29,6 +29,8 @@ class SignInController(
 
             val resp = signInService.signInUser(enteredID,enteredPW)
 
+            println(resp.ok)
+
             if(!resp.ok) throw Error(resp.message)
 
             responseService.isSuccessful("Login Success!", resp.user)

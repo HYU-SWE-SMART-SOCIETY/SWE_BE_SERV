@@ -1,7 +1,7 @@
 package com.holme.be_app.api.sync.factory
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.holme.be_app.api.sync.entity.*
+import com.holme.be_app.api.entity.instance.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import org.springframework.stereotype.Component

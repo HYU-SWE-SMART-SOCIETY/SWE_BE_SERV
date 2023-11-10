@@ -1,5 +1,6 @@
 package com.holme.be_app.api.sync.entity
 
+import com.holme.be_app.api.entity.instance.Instance
 import com.holme.be_app.api.entity.request.MultipleRequests
 import com.holme.be_app.api.entity.request.SingleRequest
 

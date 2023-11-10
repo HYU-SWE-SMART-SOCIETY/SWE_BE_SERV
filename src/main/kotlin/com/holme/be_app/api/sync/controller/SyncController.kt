@@ -1,6 +1,7 @@
 package com.holme.be_app.api.sync.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.holme.be_app.api.entity.instance.Instance
 import com.holme.be_app.api.sync.entity.*
 import com.holme.be_app.api.sync.factory.SyncInstanceTypeFactory
 import com.holme.be_app.api.sync.service.SyncRequestService

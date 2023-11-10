@@ -1,4 +1,4 @@
-package com.holme.be_app.api.sync.entity
+package com.holme.be_app.api.entity.instance
 
 import kotlinx.serialization.Serializable
 
