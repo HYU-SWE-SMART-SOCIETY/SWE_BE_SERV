@@ -8,7 +8,6 @@ import com.holme.be_app.api.setting.upload.entity.UploadRequest
 import com.holme.be_app.api.setting.upload.entity.UploadResponse
 import com.holme.be_app.api.setting.upload.service.UploadService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -27,10 +26,11 @@ class UploadController(
 
         return try{
             val userId = uploadRequest.userId
+            val settingName = uploadRequest.settingName
             val settingId = uploadRequest.settingId
             val stringifiedPayload: String = ObjectMapper().writeValueAsString(uploadRequest.payloads)
 
-            if(!uploadService.uploadSetting(userId, settingId, stringifiedPayload)) throw Error("Error! Failed to upload setting")
+            if(!uploadService.uploadSetting(userId, settingName, settingId, stringifiedPayload)) throw Error("Error! Failed to upload setting")
 
             responseService.isSuccessful(null,null)
         }catch (e: Error) {

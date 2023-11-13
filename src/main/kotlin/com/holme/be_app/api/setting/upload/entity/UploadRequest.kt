@@ -12,5 +12,6 @@ class UploadSettings<T: Any>(
 class UploadRequest<T: Instance>(
     val userId: Int,
     val settingId: Int?,
+    val settingName: String,
     override val payloads: List<UploadSettings<T>>,
 ): MultipleRequests<T>(payloads)

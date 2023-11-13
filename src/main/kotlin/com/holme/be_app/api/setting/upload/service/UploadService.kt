@@ -12,10 +12,11 @@ class UploadService (
     @Autowired val serviceUserRepository: ServiceUserRepository,
     @Autowired val settingRepository: SettingRepository
 ) {
-    fun uploadSetting(userId: Int, settingId: Int?, setting: String): Boolean {
+    fun uploadSetting(userId: Int, settingName: String, settingId: Int?, setting: String): Boolean {
         return try{
             val instanceSetting = InstanceSettingDto(
                 settingId, //* Overwrites if exists.
+                settingName,
                 settingString = setting,
                 userId
             ).toEntity(serviceUserRepository) ?: throw Error("No Such User")

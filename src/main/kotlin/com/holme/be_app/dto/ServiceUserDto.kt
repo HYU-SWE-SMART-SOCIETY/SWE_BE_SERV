@@ -1,12 +1,13 @@
 package com.holme.be_app.dto
 
+import com.holme.be_app.entity.InstanceSetting
 import com.holme.be_app.entity.ServiceUser
 
 class ServiceUserDto(
     var id: Int?,
     var name: String,
     var ident: String,
-    var password: String
+    var password: String,
 )
 
 fun ServiceUserDto.toEntity(): ServiceUser {
@@ -14,7 +15,8 @@ fun ServiceUserDto.toEntity(): ServiceUser {
         this.id,
         this.name,
         this.ident,
-        this.password
+        this.password,
+        null
     )
 }
 

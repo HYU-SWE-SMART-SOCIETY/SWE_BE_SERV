@@ -5,6 +5,7 @@ import com.holme.be_app.repository.ServiceUserRepository
 
 class InstanceSettingDto (
     val id: Int?,
+    val settingName: String,
     val settingString: String,
     val userId: Int?
 )
@@ -17,7 +18,8 @@ fun InstanceSettingDto.toEntity(
 
     return InstanceSetting(
         this.id,
+        this.settingName,
         this.settingString,
-        user = foundUser
+        user = foundUser,
     )
 }

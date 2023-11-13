@@ -5,7 +5,7 @@ import com.holme.be_app.dto.ServiceUserDto
 import jakarta.persistence.*
 
 @Entity
-class ServiceUser (
+class ServiceUser(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int?,
 
@@ -17,7 +17,12 @@ class ServiceUser (
 
     @Column(nullable = false)
     val password: String,
+
+    // One-to-Many relationship with InstanceSetting
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val instanceSettings: MutableList<InstanceSetting>? = mutableListOf()
 )
+
 
 fun ServiceUser.toDto(): ServiceUserDto {
     return ServiceUserDto(
