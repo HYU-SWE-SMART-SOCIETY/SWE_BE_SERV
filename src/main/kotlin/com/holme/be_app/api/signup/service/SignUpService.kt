@@ -2,6 +2,7 @@ package com.holme.be_app.api.signup.service
 
 import com.holme.be_app.api.signup.entity.SignUpResponse
 import com.holme.be_app.dto.ServiceUserDto
+import com.holme.be_app.dto.toEntity
 import com.holme.be_app.repository.ServiceUserRepository
 import com.holme.be_app.utils.HashFunction
 import org.springframework.beans.factory.annotation.Autowired
@@ -34,7 +35,7 @@ class SignUpService(
 
             val res = serviceUserRepository.save(
                 ServiceUserDto(null,name, ident, hashedPassword)
-                    .toDomain()
+                    .toEntity()
             )
 
             print("User ${res.id} with name ${res.name} created")

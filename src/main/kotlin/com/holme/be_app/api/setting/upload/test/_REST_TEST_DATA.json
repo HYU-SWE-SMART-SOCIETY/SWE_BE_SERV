@@ -1,0 +1,23 @@
+{
+  "userId": 2,
+  "settingId": 1,
+  "payloads": [
+    {
+      "instanceType": 1,
+      "payload": {
+        "trigger":false,
+        "degree":20,
+        "color":"yellow"
+      }
+    },
+    {
+      "instanceType": 2,
+      "payload": {
+        "isHorizontal":false,
+        "isCenterMode":false,
+        "isLeftOrTop":false,
+        "degree":100
+      }
+    }
+  ]
+}

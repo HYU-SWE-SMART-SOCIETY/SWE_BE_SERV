@@ -6,6 +6,7 @@ import com.holme.be_app.api.entity.response.SingleResponse
 import com.holme.be_app.api.entity.response.SingleResponseService
 import com.holme.be_app.api.setting.upload.entity.UploadRequest
 import com.holme.be_app.api.setting.upload.entity.UploadResponse
+import com.holme.be_app.api.setting.upload.service.UploadService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
@@ -18,20 +19,24 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/setting/upload")
 class UploadController(
+    @Autowired val uploadService: UploadService,
     @Autowired val responseService: SingleResponseService<UploadResponse>
 ) {
     @PostMapping("/")
     fun handleSettingUploadRequest(@RequestBody uploadRequest: UploadRequest<in Instance>): SingleResponse<UploadResponse>{
 
-        try{
+        return try{
             val userId = uploadRequest.userId
-            val payloads = uploadRequest.payloads
+            val settingId = uploadRequest.settingId
+            val stringifiedPayload: String = ObjectMapper().writeValueAsString(uploadRequest.payloads)
+
+            if(!uploadService.uploadSetting(userId, settingId, stringifiedPayload)) throw Error("Error! Failed to upload setting")
+
+            responseService.isSuccessful(null,null)
         }catch (e: Error) {
             val errorMsg: String = if(e.message is String) e.message!! else e.toString()
-            return responseService.isFailure(-1, errorMsg, uploadRequest)
+            responseService.isFailure(-1, errorMsg, uploadRequest)
         }
 
-
-        return responseService.isSuccessful(null,null);
     }
 }

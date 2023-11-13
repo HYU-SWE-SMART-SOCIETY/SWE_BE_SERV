@@ -1,5 +1,6 @@
 package com.holme.be_app.entity
 
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -12,7 +13,7 @@ import jakarta.persistence.OneToOne
 class InstanceSetting (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int,
+    val id: Int?,
 
     @Column(nullable = true)
     val settingString: String,

@@ -7,13 +7,15 @@ class ServiceUserDto(
     var name: String,
     var ident: String,
     var password: String
-) {
-    fun toDomain(): ServiceUser {
-        return ServiceUser(
-            this.id,
-            this.name,
-            this.ident,
-            this.password
-        )
-    }
+)
+
+fun ServiceUserDto.toEntity(): ServiceUser {
+    return ServiceUser(
+        this.id,
+        this.name,
+        this.ident,
+        this.password
+    )
 }
+
+
