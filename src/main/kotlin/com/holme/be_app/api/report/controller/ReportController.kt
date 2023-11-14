@@ -44,7 +44,7 @@ class ReportController (
             val userId = reportRequestFetchAll.payload.userId
             val reports = reportService.fetchAll(userId)
 
-            multipleResponseService.isSuccessful("", reports) //TODO
+            multipleResponseService.isSuccessful("", reports)
         }catch (e: Error){
             val errorMsg: String = if(e.message is String) e.message!! else e.toString()
             multipleResponseService.isFailure(-1,errorMsg, null)
@@ -54,8 +54,12 @@ class ReportController (
     @PostMapping("/withType")
     fun handleReportWithType(@RequestBody reportRequestWithType: ReportRequestWithType): MultipleResponse<ReportResponse> {
         return try{
+            val userId = reportRequestWithType.payload.userId
+            val reportType = reportRequestWithType.payload.reportType
 
-            multipleResponseService.isSuccessful("", null) //TODO
+            val reports = reportService.fetchType(userId, reportType)
+
+            multipleResponseService.isSuccessful("", reports)
         }catch (e: Error){
             val errorMsg: String = if(e.message is String) e.message!! else e.toString()
             multipleResponseService.isFailure(-1,errorMsg, null)

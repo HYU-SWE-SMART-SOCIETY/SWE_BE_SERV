@@ -40,4 +40,18 @@ class ReportService (
             null
         }
     }
+
+    fun fetchType(userId: Int, reportType: ReportType): List<ReportResponse>? {
+        return try{
+            val reportList = reportRepository.findAllByUserIdAndReportType(userId, reportType) ?: return null //* return null if there is no reports
+
+            //* List into ReportResponse -> Convert all reports into dto, fill it into List of ReportResponse.
+            val returnList: List<ReportResponse> = reportList.map { ReportResponse(it.toDto()) }
+
+            returnList
+        }catch (e: Error) {
+            println(e.message)
+            null
+        }
+    }
 }
