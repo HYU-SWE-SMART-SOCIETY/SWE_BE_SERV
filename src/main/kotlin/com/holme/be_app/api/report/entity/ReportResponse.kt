@@ -1,5 +1,7 @@
 package com.holme.be_app.api.report.entity
 
-class ReportResponse (
+import com.holme.be_app.dto.ReportDto
 
+class ReportResponse (
+    val report: ReportDto
 )

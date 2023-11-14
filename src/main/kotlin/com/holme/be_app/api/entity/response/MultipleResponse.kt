@@ -4,9 +4,9 @@ class MultipleResponse<T>(
     override var ok: Boolean,
     override var code: Int,
     override var message: String,
-    override var data: MutableList<T>?
-): ServiceResponse<MutableList<T>?> {
-    override fun setVal(ok: Boolean, code: Int, message: String, data: MutableList<T>?) {
+    override var data: List<T>?
+): ServiceResponse<List<T>?> {
+    override fun setVal(ok: Boolean, code: Int, message: String, data: List<T>?) {
         this.ok = ok
         this.code = code
         this.message = message

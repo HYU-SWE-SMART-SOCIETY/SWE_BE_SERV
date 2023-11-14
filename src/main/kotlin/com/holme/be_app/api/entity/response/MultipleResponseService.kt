@@ -1,9 +1,12 @@
 package com.holme.be_app.api.entity.response
 
+import org.springframework.stereotype.Service
+
+@Service
 class MultipleResponseService<T> {
     fun isSuccessful(
         message: String?,
-        data: MutableList<T>?
+        data: List<T>?
     ): MultipleResponse<T> {
         return if(message == null){
             MultipleResponse<T>(true,1, "Request Successful", data)
@@ -15,7 +18,7 @@ class MultipleResponseService<T> {
     fun isFailure(
         code: Int,
         message: String,
-        data: MutableList<T>?
+        data: List<T>?
     ): MultipleResponse<T> {
         return MultipleResponse<T>(false, code, message, data)
     }
