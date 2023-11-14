@@ -21,7 +21,11 @@ class ServiceUser(
     // One-to-Many relationship with InstanceSetting
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = [CascadeType.ALL], orphanRemoval = true)
     // FetchType.EAGER: IOT resolve lost persistence error (failed to lazily initialize a collection of role)
-    val instanceSettings: MutableList<InstanceSetting>? = mutableListOf()
+    val instanceSettings: MutableList<InstanceSetting>? = mutableListOf(),
+
+    //One-To-Many relationship with Report
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = [CascadeType.ALL], orphanRemoval = true)
+    val reports: MutableList<Report>? = mutableListOf()
 )
 
 
