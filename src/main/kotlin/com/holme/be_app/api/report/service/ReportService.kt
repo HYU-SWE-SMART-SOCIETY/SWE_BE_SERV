@@ -1,8 +1,11 @@
 package com.holme.be_app.api.report.service
 
+import com.holme.be_app.api.report.entity.ReportResponse
 import com.holme.be_app.dto.ReportDto
 import com.holme.be_app.dto.toEntity
+import com.holme.be_app.entity.Report
 import com.holme.be_app.entity.ReportType
+import com.holme.be_app.entity.toDto
 import com.holme.be_app.repository.ReportRepository
 import com.holme.be_app.repository.ServiceUserRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -21,6 +24,20 @@ class ReportService (
         }catch (e: Error) {
             println(e.message)
             false
+        }
+    }
+
+    fun fetchAll(userId: Int): List<ReportResponse>? {
+        return try{
+            val reportList = reportRepository.findAllByUserId(userId) ?: return null //* return null if there is no reports
+
+            //* List into ReportResponse -> Convert all reports into dto, fill it into List of ReportResponse.
+            val returnList: List<ReportResponse> = reportList.map { ReportResponse(it.toDto()) }
+
+            returnList
+        }catch (e: Error) {
+            println(e.message)
+            null
         }
     }
 }

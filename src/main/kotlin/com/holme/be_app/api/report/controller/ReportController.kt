@@ -41,8 +41,10 @@ class ReportController (
     @PostMapping("/fetchAll")
     fun handleReportFetchAll(@RequestBody reportRequestFetchAll: ReportRequestFetchAll): MultipleResponse<ReportResponse> {
         return try{
+            val userId = reportRequestFetchAll.payload.userId
+            val reports = reportService.fetchAll(userId)
 
-            multipleResponseService.isSuccessful("", null) //TODO
+            multipleResponseService.isSuccessful("", reports) //TODO
         }catch (e: Error){
             val errorMsg: String = if(e.message is String) e.message!! else e.toString()
             multipleResponseService.isFailure(-1,errorMsg, null)
