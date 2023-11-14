@@ -18,8 +18,18 @@ class ReportService (
 ) {
     fun generateReport(userId: Int, reportType:ReportType, data: String): Boolean {
         return try{
-            val report = ReportDto(null, payload = data, reportType,userId).toEntity(serviceUserRepository) ?: throw Error("No such user for current report.")
+            val report = ReportDto(null, payload = data, reportType, false, userId).toEntity(serviceUserRepository) ?: throw Error("No such user for current report.")
             reportRepository.save(report)
+            true
+        }catch (e: Error) {
+            println(e.message)
+            false
+        }
+    }
+
+    fun checkReport(reportId: Int): Boolean {
+        return try{
+            if(reportRepository.updateCheckedByReportId(reportId,true) <= 0) throw Error("Error: Cannot Update")
             true
         }catch (e: Error) {
             println(e.message)

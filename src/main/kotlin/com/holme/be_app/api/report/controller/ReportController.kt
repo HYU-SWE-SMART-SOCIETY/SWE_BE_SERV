@@ -4,10 +4,7 @@ import com.holme.be_app.api.entity.response.MultipleResponse
 import com.holme.be_app.api.entity.response.MultipleResponseService
 import com.holme.be_app.api.entity.response.SingleResponse
 import com.holme.be_app.api.entity.response.SingleResponseService
-import com.holme.be_app.api.report.entity.ReportRequestFetchAll
-import com.holme.be_app.api.report.entity.ReportRequestGenerate
-import com.holme.be_app.api.report.entity.ReportRequestWithType
-import com.holme.be_app.api.report.entity.ReportResponse
+import com.holme.be_app.api.report.entity.*
 import com.holme.be_app.api.report.service.ReportService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PostMapping
@@ -31,6 +28,18 @@ class ReportController (
 
             if(!reportService.generateReport(userId,reportType,data)) throw Error("Error! Failed to create report")
 
+            singleResponseService.isSuccessful("", null) //TODO
+        }catch (e: Error){
+            val errorMsg: String = if(e.message is String) e.message!! else e.toString()
+            singleResponseService.isFailure(-1,errorMsg, null)
+        }
+    }
+
+    @PostMapping("/check")
+    fun handleReportCheck(@RequestBody reportRequestCheck: ReportRequestCheck): SingleResponse<ReportResponse> {
+        return try{
+            val reportId = reportRequestCheck.payload.reportId
+            if(!reportService.checkReport(reportId)) throw Error("Error! Failed to update check state!")
             singleResponseService.isSuccessful("", null) //TODO
         }catch (e: Error){
             val errorMsg: String = if(e.message is String) e.message!! else e.toString()

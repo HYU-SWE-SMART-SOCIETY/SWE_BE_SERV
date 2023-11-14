@@ -8,6 +8,11 @@ class Generate(
     val reportType: ReportType,
     val report: String
 )
+
+class Check(
+    val reportId: Int
+)
+
 class FetchAll(
     val userId: Int
 )
@@ -20,6 +25,10 @@ class WithType (
 class ReportRequestGenerate(
     override val payload: Generate
 ):SingleRequest<Generate>(payload)
+
+class ReportRequestCheck(
+    override val payload: Check
+):SingleRequest<Check>(payload)
 
 class ReportRequestFetchAll (
     override val payload: FetchAll

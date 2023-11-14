@@ -20,6 +20,9 @@ class Report (
     @Enumerated(EnumType.ORDINAL)
     val reportType: ReportType,
 
+    @Column(nullable = false)
+    val checked: Boolean = false, //* Default Value = false
+
     @ManyToOne
     @JoinColumn(name = "userId", unique = false)
     val user:ServiceUser
@@ -30,6 +33,7 @@ fun Report.toDto(): ReportDto {
         this.id,
         this.payload,
         this.reportType,
+        this.checked,
         this.user.id
     )
 }
