@@ -26,7 +26,7 @@ class UploadController(
 
         return try{
             val userId = uploadRequest.userId
-            val settingName = uploadRequest.settingName
+            val settingName = uploadRequest.settingName.trim()
             val settingId = uploadRequest.settingId
             val stringifiedPayload: String = ObjectMapper().writeValueAsString(uploadRequest.payloads)
 
