@@ -2,6 +2,18 @@ package com.holme.be_app.api.entity.instance
 
 import kotlinx.serialization.Serializable
 
+enum class InstanceType {
+        LIGHT_BULB,
+        CURTAIN,
+        AC,
+        REFRIGERATOR,
+        WATER_DISPENSER,
+        TELEVISION,
+        SOUNDBAR,
+        MASSAGE_CHAIR,
+        AI_SPEAKER
+}
+
 interface Instance {}
 
 //* Instance 1: Light bulb
