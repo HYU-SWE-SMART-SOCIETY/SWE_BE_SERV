@@ -1,7 +1,9 @@
 package com.holme.be_app.api.ping.manager
 
 import com.holme.be_app.api.entity.instance.InstanceType
+import org.springframework.stereotype.Component
 
+@Component
 class InstanceMapManager {
     fun initializeInstanceList(): Map<InstanceType, Boolean> {
         return InstanceType.entries.associateWith { false }
