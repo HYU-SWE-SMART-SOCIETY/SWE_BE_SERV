@@ -3,6 +3,7 @@ package com.holme.be_app.api.entity.instance
 import kotlinx.serialization.Serializable
 
 enum class InstanceType {
+        REMAINING_SPACE, //* Padding for further use,
         LIGHT_BULB,
         CURTAIN,
         AC,
@@ -81,6 +82,6 @@ data class MassageChair(
 //* Instance 9: AI Speaker
 @Serializable
 data class AISpeaker(
-        var trigger: Boolean,
-        var replacementMsg: Boolean
+        var trigger: Boolean = false,
+        var replacementMsg: String = ""
 ): Instance

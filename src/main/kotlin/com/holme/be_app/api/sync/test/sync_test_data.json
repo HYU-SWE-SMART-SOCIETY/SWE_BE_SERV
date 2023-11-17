@@ -1,0 +1,71 @@
+{
+  "user": "Kyum",
+  "connectedDevices": [
+    {
+      "isExist": true,
+      "instanceId": 1
+    },
+    {
+      "isExist": true,
+      "instanceId": 2
+    },
+    {
+      "isExist": true,
+      "instanceId": 3
+    },
+    {
+      "isExist": true,
+      "instanceId": 4
+    },
+    {
+      "isExist": false,
+      "instanceId": 5
+    },
+    {
+      "isExist": true,
+      "instanceId": 6
+    },
+    {
+      "isExist": true,
+      "instanceId": 7
+    },
+    {
+      "isExist": true,
+      "instanceId": 8
+    },
+    {
+      "isExist": true,
+      "instanceId": 9
+    }
+  ],
+  "payloads": [
+    {
+      "instanceType": 1,
+      "payload": {
+        "trigger":true,
+        "degree":20,
+        "color":"yellow"
+      }
+    },
+    {
+      "instanceType": 2,
+      "payload": {
+        "isHorizontal":false,
+        "isCenterMode":false,
+        "isLeftOrTop":false,
+        "degree":100
+      }
+    },
+    {
+      "instanceType": 9,
+      "payload": {
+        "trigger": true,
+        "replacementMsg": "todo"
+      }
+    },
+    {
+      "instanceType": 10,
+      "payload": {}
+    }
+  ]
+}

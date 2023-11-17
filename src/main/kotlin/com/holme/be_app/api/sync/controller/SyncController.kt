@@ -7,6 +7,7 @@ import com.holme.be_app.api.sync.factory.SyncInstanceTypeFactory
 import com.holme.be_app.api.sync.service.SyncRequestService
 import com.holme.be_app.api.entity.response.SingleResponse
 import com.holme.be_app.api.entity.response.SingleResponseService
+import com.holme.be_app.api.sync.manager.SubroutineManager
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -23,14 +24,28 @@ class SyncController(
     @PostMapping("/request")
     fun handleSyncRequest(@RequestBody syncRequest: SyncRequest<in Instance>): SingleResponse<SyncResponse> {
         val requestQueue: MutableList<SendSyncRequest> = mutableListOf<SendSyncRequest>()
+        val substitutionQueue: MutableList<Substitute> = mutableListOf()
         requestQueue.clear()
         try{
             val user = syncRequest.user
             val requestPayloads = syncRequest.payloads
+            val connectedDevices = syncRequest.connectedDevices //* Will be used for subroutines
+
+            val subroutineManager = SubroutineManager(connectedDevices)
+
 
             for (request: SingleSyncRequest<in Instance> in requestPayloads) {
                 //* Handle & Send every request received
+                //TODO: Need to add mechanism for subroutine.
+
                 val type = request.instanceType
+                val subResp = subroutineManager.checkSubroutines(type)
+                if(subResp != null){
+                    //* Subroutine Exists.
+                    substitutionQueue.add(subResp)
+                }
+                if(subResp!= null && !subResp.isUpgrade) continue //* No device in target area, shouldn't send the request.
+
                 val data = request.payload!!
                 val instance = syncInstanceTypeFactory.generateInstanceClass(type,data)
                     ?: //* Return Value is null == Something is wrong
@@ -41,13 +56,14 @@ class SyncController(
                     ObjectMapper().writeValueAsString(instance)
                 ))
             }
-            val resp: SyncResponse = syncRequestService.sendSyncRequest(user,requestQueue)
+            val resp: SyncResponse = syncRequestService.sendSyncRequest(user,requestQueue, substitutionQueue)
 
             if(!resp.ok) throw Error("Error from HIVEMIND: ${resp.message}") //* Error from HIVEMIND
+
+            return responseService.isSuccessful(null, resp)
         }catch (e: Error) {
             val message: String = if(e.message is String) e.message!! else e.toString()
             return responseService.isFailure(-1, message, null)
         }
-        return responseService.isSuccessful(null, null)
     }
 }

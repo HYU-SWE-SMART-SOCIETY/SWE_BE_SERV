@@ -65,6 +65,7 @@ class SyncInstanceTypeFactory {
 
     private val factoryInstances: FactoryInstances = FactoryInstances()
     fun generateInstanceClass(type:Number, data: Any): Instance? {
+        println(data)
         return factoryInstances.createInstance(type, data)
     }
 }

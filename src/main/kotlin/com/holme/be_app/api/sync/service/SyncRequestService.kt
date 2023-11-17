@@ -1,9 +1,9 @@
 package com.holme.be_app.api.sync.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.holme.be_app.api.sync.entity.SendHBRequest
-import com.holme.be_app.api.sync.entity.SendSyncRequest
-import com.holme.be_app.api.sync.entity.SyncResponse
+import com.holme.be_app.api.sync.entity.*
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
@@ -18,7 +18,8 @@ class SyncRequestService <T> {
 
     fun sendSyncRequest(
         user: String,
-        requests: MutableList<SendSyncRequest>
+        requests: MutableList<SendSyncRequest>,
+        substitutionQueue: MutableList<Substitute>
     ): SyncResponse {
         //* TODO: Handle Data
         val sendHBRequest = SendHBRequest(user, requests)
@@ -36,7 +37,9 @@ class SyncRequestService <T> {
             )
 
             if(resp.statusCode.is2xxSuccessful){
-                SyncResponse(true, null)
+                val stringified = resp.body ?: throw Error("Sync Error: Empty Body")
+                val syncResult: SyncResult = Json.decodeFromString<SyncResult>(stringified)
+                SyncResponse(true, syncResult, substitutionQueue.toList(),"Sync Completed")
             }else{
                 throw Error("StatusCode: ${resp.statusCode}")
             }
@@ -44,7 +47,7 @@ class SyncRequestService <T> {
         }catch (e: Error){
             println(e.message)
             SyncResponse(
-                false, e.message
+                false, null, substitutionQueue.toList(), e.message
             )
         }
     }
