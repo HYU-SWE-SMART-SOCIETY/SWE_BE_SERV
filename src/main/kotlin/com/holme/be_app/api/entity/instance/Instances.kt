@@ -43,22 +43,22 @@ data class Curtain(
 //* Instance 3: AC
 @Serializable
 data class AC(
-        var trigger: Boolean,
-        var temperature: Int,
-        var windDegree: Int
+        var trigger: Boolean = false,
+        var temperature: Int = 0,
+        var windDegree: Int = 0
 ): Instance
 
 //* Instance 4: Refrigerator
 @Serializable
 data class Refrigerator(
-        var trigger: Boolean
+        var trigger: Boolean = false
 ): Instance
 
 //* Instance 5: Water Dispenser
 @Serializable
 data class WaterDispenser(
-        var triggerReminder: Boolean,
-        var triggerWater: Boolean
+        var triggerReminder: Boolean = false,
+        var triggerWater: Boolean = false
 ): Instance
 
 //* Instance 6: TV
