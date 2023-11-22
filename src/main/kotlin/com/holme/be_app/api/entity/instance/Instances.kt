@@ -44,8 +44,17 @@ data class Curtain(
 @Serializable
 data class AC(
         var trigger: Boolean = false,
-        var temperature: Int = 0,
-        var windDegree: Int = 0
+        var mode: String = "",
+        var airflowDirect: Boolean = false,
+        var fanSpeed: Int = 0,
+        var brightnessScreen: Int = 0,
+        var objTemperature: Int = 0,
+        var startWakeupTimer:Boolean = false,
+        var startShutdownTimer: Boolean = false,
+        var stopWakeupTimer: Boolean = false,
+        var stopShutdownTimer: Boolean = false,
+        var wakeupTime: Int = 0,
+        var shutdownTime: Int = 0,
 ): Instance
 
 //* Instance 4: Refrigerator
@@ -64,24 +73,25 @@ data class WaterDispenser(
 //* Instance 6: TV
 @Serializable
 data class Television(
-        var trigger: Boolean
+        var trigger: Boolean = false
 ): Instance
 
 //* Instance 7: Soundbar
 @Serializable
 data class SoundBar(
-        var trigger: Boolean
+        var trigger: Boolean = false
 ): Instance
 
 //* Instance 8: Massage Chair
 @Serializable
 data class MassageChair(
-        var trigger: Boolean
+        var trigger: Boolean = false
 ): Instance
 
 //* Instance 9: AI Speaker
 @Serializable
 data class AISpeaker(
         var trigger: Boolean = false,
-        var replacementMsg: String = ""
+        var askForReplacement: Boolean = false,
+        var replacement: Boolean = false
 ): Instance

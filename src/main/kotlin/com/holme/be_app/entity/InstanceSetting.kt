@@ -20,7 +20,7 @@ class InstanceSetting (
     @Column(nullable = false)
     val settingName: String,
 
-    @Column(nullable = true)
+    @Column(nullable = true, length = 4096) //* Enlarge setting length
     val settingString: String,
 
     @ManyToOne
