@@ -5,7 +5,11 @@ import com.holme.be_app.api.entity.response.MultipleResponseService
 import com.holme.be_app.api.entity.response.SingleResponse
 import com.holme.be_app.api.entity.response.SingleResponseService
 import com.holme.be_app.api.report.entity.*
+import com.holme.be_app.api.report.service.OpenAIService
 import com.holme.be_app.api.report.service.ReportService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/v1/report")
 class ReportController (
     @Autowired val reportService: ReportService,
+    @Autowired val openAIService: OpenAIService,
     @Autowired val singleResponseService: SingleResponseService<ReportResponse>,
     @Autowired val multipleResponseService: MultipleResponseService<ReportResponse>
 ) {
@@ -27,6 +32,22 @@ class ReportController (
             val data = reportRequestGenerate.payload.report
 
             if(!reportService.generateReport(userId,reportType,data)) throw Error("Error! Failed to create report")
+
+            singleResponseService.isSuccessful("", null) //TODO
+        }catch (e: Error){
+            val errorMsg: String = if(e.message is String) e.message!! else e.toString()
+            singleResponseService.isFailure(-1,errorMsg, null)
+        }
+    }
+
+    @PostMapping("/generate/ai")
+    fun handleReportGenerateUsingAI(@RequestBody reportRequestGenerate: ReportRequestGenerate): SingleResponse<ReportResponse> {
+        return try{
+            val userId = reportRequestGenerate.payload.userId
+            val reportType = reportRequestGenerate.payload.reportType
+            val report = reportRequestGenerate.payload.report
+
+            openAIService.generatePayload(report)
 
             singleResponseService.isSuccessful("", null) //TODO
         }catch (e: Error){

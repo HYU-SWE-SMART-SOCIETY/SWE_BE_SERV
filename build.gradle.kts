@@ -33,6 +33,11 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2") // JVM dependency
+	implementation ("com.aallam.openai:openai-client:3.5.1") //* Open AI
+	implementation("io.ktor:ktor-client-apache5:2.3.0") // Ktor
+	implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3") // Coroutine
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3") // Coroutine
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.7.3") // Coroutine
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("com.h2database:h2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
