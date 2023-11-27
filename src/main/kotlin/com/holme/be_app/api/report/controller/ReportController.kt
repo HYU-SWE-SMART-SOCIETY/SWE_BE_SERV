@@ -41,18 +41,23 @@ class ReportController (
     }
 
     @PostMapping("/generate/ai")
-    fun handleReportGenerateUsingAI(@RequestBody reportRequestGenerate: ReportRequestGenerate): SingleResponse<ReportResponse> {
-        return try{
+    suspend fun handleReportGenerateUsingAI(@RequestBody reportRequestGenerate: ReportRequestGenerate): SingleResponse<ReportResponse> {
+        return try {
             val userId = reportRequestGenerate.payload.userId
             val reportType = reportRequestGenerate.payload.reportType
             val report = reportRequestGenerate.payload.report
 
-            openAIService.generatePayload(report)
+            val generatedContent = openAIService.generatePayload(reportType, report)
 
-            singleResponseService.isSuccessful("", null) //TODO
-        }catch (e: Error){
-            val errorMsg: String = if(e.message is String) e.message!! else e.toString()
-            singleResponseService.isFailure(-1,errorMsg, null)
+            if (generatedContent != null) {
+                singleResponseService.isSuccessful("SUCCESSFUL", generatedContent)
+            } else {
+                // Handle the case where generation failed
+                singleResponseService.isFailure(-1, "Payload generation failed", null)
+            }
+        } catch (e: Exception) {
+            val errorMsg: String = if (e.message is String) e.message!! else e.toString()
+            singleResponseService.isFailure(-1, errorMsg, null)
         }
     }
 

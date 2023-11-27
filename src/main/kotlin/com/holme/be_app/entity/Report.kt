@@ -3,10 +3,7 @@ package com.holme.be_app.entity
 import com.holme.be_app.dto.ReportDto
 import jakarta.persistence.*
 
-public enum class ReportType {
-    REPLACEMENT_UPGRADE,
-    REPLACEMENT_SUBSTITUTE
-}
+public enum class ReportType { SYNC, REPLACEMENT_UPGRADE, REPLACEMENT_SUBSTITUTE }
 
 @Entity
 class Report (
