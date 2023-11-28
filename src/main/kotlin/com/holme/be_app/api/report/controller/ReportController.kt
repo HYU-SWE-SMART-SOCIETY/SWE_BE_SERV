@@ -47,14 +47,11 @@ class ReportController (
             val reportType = reportRequestGenerate.payload.reportType
             val report = reportRequestGenerate.payload.report
 
-            val generatedContent = openAIService.generatePayload(reportType, report)
+            val generatedContent = openAIService.generatePayload(reportType, report) ?: throw Error("Failed to generate content.")
 
-            if (generatedContent != null) {
-                singleResponseService.isSuccessful("SUCCESSFUL", generatedContent)
-            } else {
-                // Handle the case where generation failed
-                singleResponseService.isFailure(-1, "Payload generation failed", null)
-            }
+            if(!reportService.generateReport(userId,reportType,generatedContent)) throw Error("Error! Failed to create report")
+
+            singleResponseService.isSuccessful("SUCCESSFUL", generatedContent)
         } catch (e: Exception) {
             val errorMsg: String = if (e.message is String) e.message!! else e.toString()
             singleResponseService.isFailure(-1, errorMsg, null)

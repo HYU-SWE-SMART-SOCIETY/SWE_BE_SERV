@@ -38,7 +38,7 @@ class OpenAIService(
                     //TODO: Make this code more secure
                     ChatMessage(
                         role = ChatRole.User,
-                        content = "Make following information in assistant style using Korean for our IOT application with smooth expression. The expression will be in 3 lines. (Successful Status: ${type} (In Full Sentence), Reminder Message, The list of IoTs)\n Information: $request"
+                        content = "Make following information in assistant style using Korean for our IOT application with smooth expression. [Guideline]1. REPLACEMENT should be translated into '대체', AC into '에어컨'. 2.The expression will be in 3 lines. (Successful Status: ${type} (In Full Sentence), Reminder Message, The list of IoTs (This must be translated into Korean!))\n Information: $request"
                     )
                 )
             )

@@ -31,12 +31,7 @@ class PingService {
             if(!resp.statusCode.is2xxSuccessful) throw Error("Response Not Successful")
 
             val stringified = resp.body ?: throw Error("No Body")
-            val pingResult = Json.decodeFromString<PingResult>(stringified)
-
-            println(pingResult)
-
-            return pingResult
-
+            return Json.decodeFromString<PingResult>(stringified)
 
         }catch (e:Error){
             println("Error! " + e.message)
