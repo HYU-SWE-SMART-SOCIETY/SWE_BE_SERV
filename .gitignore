@@ -1,4 +1,8 @@
 HELP.md
+
+## Shell script for dev.
+boot.sh
+
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
