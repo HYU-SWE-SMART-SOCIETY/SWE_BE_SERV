@@ -12,7 +12,8 @@ enum class InstanceType {
         TELEVISION,
         SOUNDBAR,
         MASSAGE_CHAIR,
-        AI_SPEAKER
+        AI_SPEAKER,
+        PET_FEEDER
 }
 
 interface Instance {}
@@ -94,4 +95,9 @@ data class AISpeaker(
         var trigger: Boolean = false,
         var askForReplacement: Boolean = false,
         var replacement: Boolean = false
+): Instance
+
+@Serializable
+data class PetFeeder(
+        var trigger: Boolean = false
 ): Instance

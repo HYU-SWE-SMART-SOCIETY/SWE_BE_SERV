@@ -16,7 +16,8 @@ private class FactoryInstances {
             6 to Television::class.java,
             7 to SoundBar::class.java,
             8 to MassageChair::class.java,
-            9 to AISpeaker::class.java
+            9 to AISpeaker::class.java,
+            10 to PetFeeder::class.java,
     )
     inline fun <reified T : Instance> decodeInstance(data: String): T? { //Decode the data into dedicated string
         return try {
@@ -41,6 +42,7 @@ private class FactoryInstances {
             is SoundBar -> decodeInstance<SoundBar>(jsonStr)
             is MassageChair -> decodeInstance<MassageChair>(jsonStr)
             is AISpeaker -> decodeInstance<AISpeaker>(jsonStr)
+            is PetFeeder -> decodeInstance<PetFeeder>(jsonStr)
             else -> return null
         }
     }

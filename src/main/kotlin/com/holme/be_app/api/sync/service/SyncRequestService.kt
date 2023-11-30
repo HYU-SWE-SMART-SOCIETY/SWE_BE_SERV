@@ -23,6 +23,7 @@ class SyncRequestService <T> {
     ): SyncResponse {
         //* TODO: Handle Data
         val sendHBRequest = SendHBRequest(user, requests)
+        println(requests)
         val restTemplate = RestTemplate()
         val header = HttpHeaders()
         //* Send Request
