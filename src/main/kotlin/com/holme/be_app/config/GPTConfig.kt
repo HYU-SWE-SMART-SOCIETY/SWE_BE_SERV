@@ -13,6 +13,7 @@ class GPTConfig {
         val token: String? = System.getenv("OPENAI_API_KEY")
 
         return if(token == null){
+            println("ERROR!!!: Cannot read token")
             null
         }else{
             OpenAIConfig(

@@ -68,11 +68,11 @@ class SyncController(
             val reportType: ReportType = SyncType().returnSyncType(syncType)
             val instListMsg: String = "SUCCESSFUL: $instanceNameQueue"
 
+            if(!resp.ok) throw Error("Error from HIVEMIND: ${resp.message}") //* Error from HIVEMIND
+
             if(!sendReportService.sendReportRequest(user, reportType, instListMsg)){
                 throw Error("Error! Something gone wrong in report service.")
             }
-
-            if(!resp.ok) throw Error("Error from HIVEMIND: ${resp.message}") //* Error from HIVEMIND
 
             return responseService.isSuccessful(null, resp)
         }catch (e: Error) {

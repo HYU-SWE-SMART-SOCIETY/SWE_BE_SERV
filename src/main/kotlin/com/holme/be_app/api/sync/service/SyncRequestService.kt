@@ -38,6 +38,7 @@ class SyncRequestService <T> {
 
             if(resp.statusCode.is2xxSuccessful){
                 val stringified = resp.body ?: throw Error("Sync Error: Empty Body")
+                println(stringified)
                 val syncResult: SyncResult = Json.decodeFromString<SyncResult>(stringified)
                 SyncResponse(true, syncResult, substitutionQueue.toList(),"Sync Completed")
             }else{

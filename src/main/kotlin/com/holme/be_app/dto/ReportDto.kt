@@ -9,7 +9,8 @@ class ReportDto (
     val payload: String,
     val reportType: ReportType,
     val checked: Boolean,
-    val userId: Int?
+    val userId: Int?,
+    val created_at: String?
 )
 
 fun ReportDto.toEntity(
@@ -22,6 +23,7 @@ fun ReportDto.toEntity(
         this.payload,
         this.reportType,
         this.checked,
+        this.created_at,
         user = foundUser
     )
 }

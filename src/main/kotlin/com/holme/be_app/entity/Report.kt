@@ -2,6 +2,7 @@ package com.holme.be_app.entity
 
 import com.holme.be_app.dto.ReportDto
 import jakarta.persistence.*
+import java.util.Date
 
 public enum class ReportType { SYNC, UPGRADE, REPLACEMENT }
 
@@ -20,6 +21,9 @@ class Report (
     @Column(nullable = false)
     val checked: Boolean = false, //* Default Value = false
 
+    @Column(nullable = true)
+    val created_at: String? ="",
+
     @ManyToOne
     @JoinColumn(name = "userId", unique = false)
     val user:ServiceUser
@@ -31,7 +35,8 @@ fun Report.toDto(): ReportDto {
         this.payload,
         this.reportType,
         this.checked,
-        this.user.id
+        this.user.id,
+        this.created_at,
     )
 }
 
