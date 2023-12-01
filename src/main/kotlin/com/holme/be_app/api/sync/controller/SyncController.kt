@@ -72,18 +72,37 @@ class SyncController(
 
             if(!resp.ok) throw Error("Error from HIVEMIND: ${resp.message}") //* Error from HIVEMIND
 
-            if(requestPayloads.size <= 1 && (requestPayloads[0].instanceType == 9 || requestPayloads[0].instanceType == 10)){
-                //Demo: For the fast response.
-                if(requestPayloads[0].instanceType == 9){
-                    //* TODO Change hard-coded userId
-                    reportService.generateReport(2, ReportType.SYNC, "성공적으로 연결되었습니다. \n - AI 스피커")
-                }else{
-                    //* TODO Change hard-coded userId
-                    reportService.generateReport(2, ReportType.REPLACEMENT, "애완용 급수기가 존재하지 않습니다. 대체 알고리즘이 동작합니다.")
+            if(syncType == "sync_ai"){
+                if(!sendReportService.sendReportRequest(user, reportType, instListMsg)){
+                    throw Error("Error! Something gone wrong in report service.")
                 }
-            }
-            else if(!sendReportService.sendReportRequest(user, reportType, instListMsg)){
-                throw Error("Error! Something gone wrong in report service.")
+            } //* Demo: For the fast response.
+            else{
+                if(requestPayloads.size > 1){
+                    if (requestPayloads.size == 3){
+                        //* TODO Change hard-coded userId
+                        reportService.generateReport(2, ReportType.SYNC, "집에서처럼 '낮잠 루틴'을 실행했습니다.")
+                    }else if(requestPayloads.size == 2){
+                        //* TODO Change hard-coded userId
+                        reportService.generateReport(2, ReportType.SYNC, "이번 여행 동안은 사운드바에서 음악을 재생합니다.")
+                    }
+                }else{
+                    when (requestPayloads[0].instanceType) {
+                        9 -> {
+                            //* TODO Change hard-coded userId
+                            reportService.generateReport(2, ReportType.SYNC, "성공적으로 연결되었습니다. \n - AI 스피커")
+                        }
+                        10 -> {
+                            //* TODO Change hard-coded userId
+                            reportService.generateReport(2, ReportType.REPLACEMENT, "애완용 급수기가 존재하지 않습니다. 대체 알고리즘이 동작합니다.")
+                        }
+                        5 -> {
+                            //* TODO Change hard-coded userId
+                            reportService.generateReport(2, ReportType.REPLACEMENT, "이번 여행 동안은 크림이 급수 루틴을 정수기로 대체합니다.")
+                        }
+                    }
+                }
+
             }
 
             return responseService.isSuccessful(null, resp)
