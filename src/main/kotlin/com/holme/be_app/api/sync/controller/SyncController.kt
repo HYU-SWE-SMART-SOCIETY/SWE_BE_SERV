@@ -47,11 +47,12 @@ class SyncController(
                 //TODO: Need to add mechanism for subroutine.
 
                 val instanceType = request.instanceType
-                val subResp = subroutineManager.checkSubroutines(instanceType)
-                if(subResp != null){
-                    //* Subroutine Exists.
-                    substitutionQueue.add(subResp)
-                }
+                //* Demo: Fixed code
+//                val subResp = subroutineManager.checkSubroutines(instanceType)
+//                if(subResp != null){
+//                    //* Subroutine Exists.
+//                    substitutionQueue.add(subResp)
+//                }
                 //if(subResp!= null && !subResp.isUpgrade) continue //* No device in target area, shouldn't send the request.
 
                 instanceNameQueue.add(InstanceType.entries[instanceType]) //* Add instance type in name queue, it will later be used for report.

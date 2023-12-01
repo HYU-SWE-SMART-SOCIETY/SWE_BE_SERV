@@ -16,9 +16,9 @@ spring:
     activate:
       on-profile: dev
   datasource:
-    url: "jdbc:postgresql://localhost:5432/HOLME_Dev?schema=public"
-    username: kyumericano
-    password: PASSWORD
+    url: "jdbc:postgresql://holme-db.ceup2aplufna.eu-north-1.rds.amazonaws.com:5432/postgres?schema=public"
+    username: postgres
+    password: q1w2e3r4!!
   jpa:
     properties:
       hibernate:
