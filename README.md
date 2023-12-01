@@ -41,6 +41,7 @@
         - Endpoint check reports: `/api/v1/report/check`
     - `\entity\ReportRequest.kt`, `\entity\ReportResonse.kt`: Request/Response class definition for Report Service
     - `\service\ReportService.kt`: Report service class. Contains business logic for report service.
+    - `\service\OpenAIService`: Report service class using Open AI. Contains business logic for report service using Chat GPT..
 - `\setting`: Setting service directory; it will be divided into uploading service and downloading service.
     - `\upload`: Setting upload service directory; contains service to upload IOT instance setting to database.
         - `\controller\UploadController.kt`:  Controller for upload service.
@@ -93,3 +94,4 @@
 
 ### 7. `\config` Directory
 - `WebAppConfig`: Set backend configuration required to be applied. (e.g. CORS configuration)
+- `GPTConfig`: Set OpenAI configuration required for using Chat GPT.
