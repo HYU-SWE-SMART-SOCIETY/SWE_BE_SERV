@@ -100,6 +100,10 @@ class SyncController(
                             //* TODO Change hard-coded userId
                             reportService.generateReport(2, ReportType.REPLACEMENT, "이번 여행 동안은 크림이 급수 루틴을 정수기로 대체합니다.")
                         }
+                        3 -> {
+                            //* TODO Change hard-coded userId
+                            reportService.generateReport(2, ReportType.REPLACEMENT, "성공적으로 연결되었습니다. \n - 에어컨")
+                        }
                     }
                 }
 
